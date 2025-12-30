@@ -514,3 +514,108 @@
   transform: none !important;
   animation: none !important;
 }
+
+/* Heatmap Tooltip - GitHub Style */
+.heatmap-tooltip {
+  position: fixed;
+  z-index: 1000;
+  padding: 8px 12px;
+  background: rgba(36, 41, 46, 0.95);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%);
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.heatmap-tooltip.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.heatmap-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+}
+
+.heatmap-tooltip.arrow-bottom::after {
+  bottom: -12px;
+  border-top-color: rgba(36, 41, 46, 0.95);
+}
+
+.heatmap-tooltip.arrow-top::after {
+  top: -12px;
+  border-bottom-color: rgba(36, 41, 46, 0.95);
+}
+
+.heatmap-cell:not(.empty) {
+  cursor: pointer;
+}
+
+.heatmap-cell:not(.empty):hover {
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: -1px;
+}
+
+.screenshot-mode .heatmap-tooltip {
+  display: none !important;
+}
+
+/* Weekly Tooltip */
+.weekly-tooltip {
+  position: fixed;
+  z-index: 1000;
+  padding: 8px 12px;
+  background: rgba(36, 41, 46, 0.95);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%);
+  transition: opacity 0.15s ease, visibility 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.weekly-tooltip.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.weekly-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(36, 41, 46, 0.95);
+}
+
+.weekly-bar {
+  cursor: pointer;
+}
+
+.weekly-bar:hover {
+  opacity: 0.8;
+  outline: 2px solid rgba(255, 255, 255, 0.6);
+  outline-offset: -1px;
+}
+
+.screenshot-mode .weekly-tooltip {
+  display: none !important;
+}

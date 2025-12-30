@@ -17,6 +17,10 @@ export class Renderer {
     this.renderTopStats();
     this.renderWeeklyChart();
     this.renderHeatmap();
+    this.initHeatmapTooltip();
+    this.bindHeatmapTooltipEvents();
+    this.initWeeklyTooltip();
+    this.bindWeeklyTooltipEvents();
     this.renderLists();
     this.renderBottomStats();
 
@@ -58,7 +62,11 @@ export class Renderer {
     if (!container) return;
 
     container.innerHTML = '';
-    const distribution = this.stats.weeklyDistribution;
+    const original = this.stats.weeklyDistribution;
+    // 調整順序：週日移到最前面 [Mon,Tue,Wed,Thu,Fri,Sat,Sun] → [Sun,Mon,Tue,Wed,Thu,Fri,Sat]
+    const distribution = [original[6], ...original.slice(0, 6)];
+    const dayNames = ['週日', '週一', '週二', '週三', '週四', '週五', '週六'];
+
     const maxIdx = distribution.reduce((maxI, curr, i, arr) =>
       curr.count > arr[maxI].count ? i : maxI, 0);
 
@@ -67,6 +75,8 @@ export class Renderer {
       bar.className = 'weekly-bar' + (i === maxIdx ? ' active' : '');
       bar.style.height = `${Math.max(day.percentage, 10)}%`;
       bar.dataset.height = `${Math.max(day.percentage, 10)}%`;
+      bar.dataset.dayName = dayNames[i];
+      bar.dataset.count = day.count;
       container.appendChild(bar);
     });
 
@@ -137,7 +147,8 @@ export class Renderer {
           if (level > 0) {
             cell.classList.add(`level-${level}`);
           }
-          cell.title = `${dateStr}: ${count} 則貼文`;
+          cell.dataset.date = dateStr;
+          cell.dataset.count = count;
         }
 
         weekDiv.appendChild(cell);
@@ -316,5 +327,149 @@ export class Renderer {
    */
   delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * 初始化熱力圖 tooltip
+   */
+  initHeatmapTooltip() {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'heatmap-tooltip';
+    document.body.appendChild(tooltip);
+    this.heatmapTooltip = tooltip;
+  }
+
+  /**
+   * 格式化日期為 M/D 格式
+   */
+  formatDateForTooltip(dateStr) {
+    const [year, month, day] = dateStr.split('-');
+    return `${parseInt(month)}/${parseInt(day)}`;
+  }
+
+  /**
+   * 顯示熱力圖 tooltip
+   */
+  showHeatmapTooltip(cell) {
+    const tooltip = this.heatmapTooltip;
+    const dateStr = cell.dataset.date;
+    const count = parseInt(cell.dataset.count) || 0;
+
+    if (!dateStr) return;
+
+    const formattedDate = this.formatDateForTooltip(dateStr);
+    tooltip.textContent = `${formattedDate} 發布 ${count} 則貼文`;
+
+    const cellRect = cell.getBoundingClientRect();
+    const left = cellRect.left + cellRect.width / 2;
+
+    const spaceAbove = cellRect.top;
+    const tooltipHeight = 36;
+    const arrowHeight = 12;
+    const margin = 4;
+
+    let top;
+    tooltip.classList.remove('arrow-bottom', 'arrow-top');
+
+    if (spaceAbove > tooltipHeight + arrowHeight + margin) {
+      top = cellRect.top - tooltipHeight - arrowHeight - margin;
+      tooltip.classList.add('arrow-bottom');
+    } else {
+      top = cellRect.bottom + arrowHeight + margin;
+      tooltip.classList.add('arrow-top');
+    }
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+    tooltip.classList.add('visible');
+  }
+
+  /**
+   * 隱藏熱力圖 tooltip
+   */
+  hideHeatmapTooltip() {
+    if (this.heatmapTooltip) {
+      this.heatmapTooltip.classList.remove('visible');
+    }
+  }
+
+  /**
+   * 綁定熱力圖 tooltip 事件
+   */
+  bindHeatmapTooltipEvents() {
+    const heatmap = document.getElementById('heatmap');
+    if (!heatmap) return;
+
+    heatmap.addEventListener('mouseenter', (e) => {
+      if (e.target.classList.contains('heatmap-cell') &&
+          !e.target.classList.contains('empty')) {
+        this.showHeatmapTooltip(e.target);
+      }
+    }, true);
+
+    heatmap.addEventListener('mouseleave', (e) => {
+      if (e.target.classList.contains('heatmap-cell')) {
+        this.hideHeatmapTooltip();
+      }
+    }, true);
+  }
+
+  /**
+   * 初始化 Weekly tooltip
+   */
+  initWeeklyTooltip() {
+    const tooltip = document.createElement('div');
+    tooltip.className = 'weekly-tooltip';
+    document.body.appendChild(tooltip);
+    this.weeklyTooltip = tooltip;
+  }
+
+  /**
+   * 顯示 Weekly tooltip
+   */
+  showWeeklyTooltip(bar) {
+    const tooltip = this.weeklyTooltip;
+    if (!tooltip) return;
+
+    const dayName = bar.dataset.dayName;
+    const count = parseInt(bar.dataset.count) || 0;
+    tooltip.textContent = `${dayName} ${count.toLocaleString()} 篇`;
+
+    const barRect = bar.getBoundingClientRect();
+    const left = barRect.left + barRect.width / 2;
+    const top = barRect.top - 36 - 12 - 4;
+
+    tooltip.style.left = `${left}px`;
+    tooltip.style.top = `${top}px`;
+    tooltip.classList.add('visible');
+  }
+
+  /**
+   * 隱藏 Weekly tooltip
+   */
+  hideWeeklyTooltip() {
+    if (this.weeklyTooltip) {
+      this.weeklyTooltip.classList.remove('visible');
+    }
+  }
+
+  /**
+   * 綁定 Weekly tooltip 事件
+   */
+  bindWeeklyTooltipEvents() {
+    const container = document.getElementById('weekly-chart');
+    if (!container) return;
+
+    container.addEventListener('mouseenter', (e) => {
+      if (e.target.classList.contains('weekly-bar')) {
+        this.showWeeklyTooltip(e.target);
+      }
+    }, true);
+
+    container.addEventListener('mouseleave', (e) => {
+      if (e.target.classList.contains('weekly-bar')) {
+        this.hideWeeklyTooltip();
+      }
+    }, true);
   }
 }
