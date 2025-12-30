@@ -8,13 +8,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/result.css">
+  <script>
+    (function() {
+      var scale = Math.min((window.innerWidth - 40) / 1080, 1);
+      document.documentElement.style.setProperty('--container-scale', scale);
+    })();
+  </script>
 </head>
 
 <body>
   <!-- 結果頁面 -->
   <div id="result-page" class="page active">
     <div class="result-wrapper">
-      <div id="wrapped-container" class="container">
+      <div class="container-wrapper">
+        <div id="wrapped-container" class="container">
         <!-- Header -->
         <div class="header">
           <div class="logo">
@@ -138,6 +145,7 @@
           <div class="username" id="username">@username</div>
         </div>
       </div>
+      </div>
 
       <div class="actions">
         <button id="download-btn" class="download-btn">
@@ -150,6 +158,13 @@
         </button>
         <button id="restart-btn" class="restart-btn">重新產生</button>
       </div>
+    </div>
+  </div>
+
+  <div id="download-overlay" class="download-overlay">
+    <div class="download-loading">
+      <div class="spinner"></div>
+      <span>產生圖片中...</span>
     </div>
   </div>
 

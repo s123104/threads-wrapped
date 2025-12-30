@@ -17,6 +17,17 @@ class ResultApp {
   }
 
   /**
+   * 初始化響應式縮放
+   */
+  initResponsiveScale() {
+    const updateScale = () => {
+      const scale = Math.min((window.innerWidth - 40) / 1080, 1);
+      document.documentElement.style.setProperty('--container-scale', scale);
+    };
+    window.addEventListener('resize', updateScale);
+  }
+
+  /**
    * 初始化
    */
   async init() {
@@ -34,6 +45,9 @@ class ResultApp {
     // 渲染統計資料
     this.renderer = new Renderer(this.stats);
     await this.renderer.render();
+
+    // 初始化響應式縮放
+    this.initResponsiveScale();
 
     // 初始化事件監聽
     this.initEventListeners();
@@ -81,21 +95,43 @@ class ResultApp {
       }
     }
 
-    try {
-      // 截圖前：啟用截圖模式，強制所有動畫元素可見
-      this.wrappedContainer.classList.add('screenshot-mode');
+    const overlay = document.getElementById('download-overlay');
 
-      // 等待 DOM 更新
+    // 顯示 loading
+    overlay.classList.add('active');
+    await new Promise(r => setTimeout(r, 50));
+
+    try {
+      // 建立離屏容器（避免影響 viewport 縮放）
+      const offscreenContainer = document.createElement('div');
+      offscreenContainer.style.cssText = `
+        position: fixed;
+        left: -9999px;
+        top: 0;
+        width: 1080px;
+        height: 1080px;
+        overflow: hidden;
+        z-index: -1;
+      `;
+      document.body.appendChild(offscreenContainer);
+
+      // 克隆元素
+      const clone = this.wrappedContainer.cloneNode(true);
+      clone.style.transform = 'none';
+      clone.classList.add('screenshot-mode');
+      offscreenContainer.appendChild(clone);
+
       await new Promise(r => setTimeout(r, 100));
 
-      const canvas = await html2canvas(this.wrappedContainer, {
+      // 對克隆元素截圖
+      const canvas = await html2canvas(clone, {
         scale: 2,
         backgroundColor: '#000000',
         useCORS: true
       });
 
-      // 截圖後：移除截圖模式
-      this.wrappedContainer.classList.remove('screenshot-mode');
+      // 移除離屏容器
+      document.body.removeChild(offscreenContainer);
 
       const link = document.createElement('a');
       link.download = `threads-wrapped-2025-${this.stats.username}.png`;
@@ -103,9 +139,10 @@ class ResultApp {
       link.click();
     } catch (error) {
       console.error('Download error:', error);
-      // 確保移除截圖模式
-      this.wrappedContainer.classList.remove('screenshot-mode');
       alert('下載失敗，請稍後再試');
+    } finally {
+      await new Promise(r => setTimeout(r, 200));
+      overlay.classList.remove('active');
     }
   }
 
