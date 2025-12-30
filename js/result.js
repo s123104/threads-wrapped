@@ -82,11 +82,20 @@ class ResultApp {
     }
 
     try {
+      // 截圖前：啟用截圖模式，強制所有動畫元素可見
+      this.wrappedContainer.classList.add('screenshot-mode');
+
+      // 等待 DOM 更新
+      await new Promise(r => setTimeout(r, 100));
+
       const canvas = await html2canvas(this.wrappedContainer, {
         scale: 2,
         backgroundColor: '#000000',
         useCORS: true
       });
+
+      // 截圖後：移除截圖模式
+      this.wrappedContainer.classList.remove('screenshot-mode');
 
       const link = document.createElement('a');
       link.download = `threads-wrapped-2025-${this.stats.username}.png`;
@@ -94,6 +103,8 @@ class ResultApp {
       link.click();
     } catch (error) {
       console.error('Download error:', error);
+      // 確保移除截圖模式
+      this.wrappedContainer.classList.remove('screenshot-mode');
       alert('下載失敗，請稍後再試');
     }
   }

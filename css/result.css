@@ -454,23 +454,63 @@
   color: #FFFFFF;
 }
 
-/* Animations - 元素預設可見，動畫只是視覺效果 */
+/* Animations - 區塊淡入動畫 */
 .animate-item {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.animate-item.visible {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .count-up {
   transition: all 0.05s ease;
 }
 
-/* Heatmap - 元素預設可見 */
+/* Heatmap Animation */
 .heatmap-cell {
-  opacity: 1;
+  opacity: 0;
 }
 
-/* Weekly Bar - 元素預設可見 */
+.heatmap-cell.animate {
+  animation: cellFadeIn 0.1s ease forwards;
+}
+
+@keyframes cellFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Weekly Bar Animation */
 .weekly-bar {
-  transform: scaleY(1);
+  transform: scaleY(0);
   transform-origin: bottom;
+}
+
+.weekly-bar.animate {
+  animation: barGrow 0.5s ease forwards;
+}
+
+@keyframes barGrow {
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* 截圖模式 - 強制所有動畫元素可見 */
+.screenshot-mode .animate-item,
+.screenshot-mode .heatmap-cell,
+.screenshot-mode .weekly-bar {
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
 }
