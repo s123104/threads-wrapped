@@ -1,156 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #000000;
-  color: #FFFFFF;
-  min-height: 100vh;
-}
-
-/* Page System */
-.page {
-  display: none;
-  min-height: 100vh;
-}
-
-.page.active {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Upload Page */
-.upload-container {
-  max-width: 600px;
-  width: 100%;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.logo-header {
-  margin-bottom: 40px;
-}
-
-.threads-logo {
-  width: 64px;
-  height: 64px;
-  margin-bottom: 16px;
-}
-
-.logo-header h1 {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 8px;
-}
-
-.logo-header .year-svg-header {
-  width: 150px;
-  height: 60px;
-  display: block;
-  margin: 0 auto;
-}
-
-.drop-zone {
-  border: 2px dashed rgba(255, 255, 255, 0.3);
-  border-radius: 16px;
-  padding: 60px 40px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.drop-zone:hover,
-.drop-zone.dragover {
-  border-color: rgba(255, 255, 255, 0.6);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.upload-icon {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 16px;
-  opacity: 0.6;
-}
-
-.drop-text {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.drop-subtext {
-  font-size: 14px;
-  color: #666666;
-}
-
-.instructions {
-  margin-top: 40px;
-  text-align: left;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
-}
-
-.instructions p {
-  font-size: 14px;
-  font-weight: 600;
-  color: #888888;
-  margin-bottom: 12px;
-}
-
-.instructions ol {
-  padding-left: 20px;
-  color: #666666;
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-/* Loading Page */
-.loading-container {
-  text-align: center;
-}
-
-.spinner {
-  width: 48px;
-  height: 48px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #FFFFFF;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 24px;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-#loading-text {
-  font-size: 16px;
-  color: #888888;
-  margin-bottom: 24px;
-}
-
-.progress-bar {
-  width: 200px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
-  overflow: hidden;
-  margin: 0 auto;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 0%;
-  background: #FFFFFF;
-  transition: width 0.3s ease;
-}
+/**
+ * result.css - 結果頁面樣式
+ */
 
 /* Result Page */
 #result-page {
@@ -522,6 +372,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 6px;
+  opacity: 1;
 }
 
 .bottom-stat .value {
@@ -603,54 +454,23 @@ body {
   color: #FFFFFF;
 }
 
-/* Animations */
+/* Animations - 元素預設可見，動畫只是視覺效果 */
 .animate-item {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.animate-item.visible {
-  animation: fadeInUp 0.6s ease forwards;
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .count-up {
   transition: all 0.05s ease;
 }
 
-/* Heatmap Animation */
+/* Heatmap - 元素預設可見 */
 .heatmap-cell {
-  opacity: 0;
+  opacity: 1;
 }
 
-.heatmap-cell.animate {
-  animation: cellFadeIn 0.1s ease forwards;
-}
-
-@keyframes cellFadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-/* Weekly Bar Animation */
+/* Weekly Bar - 元素預設可見 */
 .weekly-bar {
-  transform: scaleY(0);
+  transform: scaleY(1);
   transform-origin: bottom;
-}
-
-.weekly-bar.animate {
-  animation: barGrow 0.5s ease forwards;
-}
-
-@keyframes barGrow {
-  to {
-    transform: scaleY(1);
-  }
 }

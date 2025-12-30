@@ -1,0 +1,1072 @@
+/**
+ * stories.css - 故事流專用樣式
+ */
+
+/* ===== 故事容器 ===== */
+#story-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+#story-container.active {
+  display: block;
+}
+
+/* ===== 進度條 ===== */
+.story-progress-bar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  gap: 4px;
+  z-index: 100;
+}
+
+.progress-segment {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-segment.completed {
+  background: #fff;
+}
+
+.progress-segment.active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.progress-segment.active::after {
+  content: '';
+  display: block;
+  height: 100%;
+  background: #fff;
+  animation: progressFill 5s linear forwards;
+}
+
+@keyframes progressFill {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* ===== 頁面容器 ===== */
+.story-pages-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* ===== 單頁基礎 ===== */
+.story-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 40px;
+  box-sizing: border-box;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.story-page.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.story-page.exit {
+  opacity: 0;
+  transform: scale(1.05);
+}
+
+/* ===== 故事頁專用元素 ===== */
+.story-page .label {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0;
+}
+
+.story-page .label.visible {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.big-number {
+  font-size: 100px;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+}
+
+.unit {
+  font-size: 32px;
+  color: #888;
+  margin-left: 8px;
+}
+
+/* ===== 點擊提示 ===== */
+.tap-hint {
+  position: absolute;
+  bottom: 40px;
+  font-size: 14px;
+  color: #444;
+  opacity: 0;
+}
+
+.tap-hint.visible {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* ===== 通用動畫 ===== */
+.fade-up {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scale-in {
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.bounce-scale {
+  animation: bounceScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes bounceScale {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.spin-in {
+  animation: spinIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes spinIn {
+  from {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+/* ===== 第 1 頁：開場 ===== */
+.page-opening .opening-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.page-opening .avatar-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin-bottom: 32px;
+}
+
+.page-opening .avatar-ring {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 160px;
+  height: 160px;
+  border: 3px solid;
+  border-color: #fff transparent #fff transparent;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.page-opening .avatar-placeholder {
+  width: 140px;
+  height: 140px;
+  background: linear-gradient(135deg, #333, #111);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.page-opening .threads-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.page-opening .threads-icon path {
+  fill: #fff;
+}
+
+.page-opening .opening-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.page-opening .subtitle {
+  font-size: 18px;
+  color: #888;
+  opacity: 0;
+}
+
+.page-opening .title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  opacity: 0;
+}
+
+.page-opening .username {
+  font-size: 20px;
+  color: #666;
+  margin-top: 8px;
+  opacity: 0;
+}
+
+/* ===== 第 2 頁：起點 ===== */
+.page-first-post {
+  perspective: 1000px;
+}
+
+.page-first-post .diary-book {
+  position: relative;
+  width: 280px;
+  height: 360px;
+}
+
+.page-first-post .diary-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+  border-radius: 4px 12px 12px 4px;
+  transform-origin: left center;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.page-first-post .diary-spine {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(to right, #222, #333);
+  border-radius: 4px 0 0 4px;
+}
+
+.page-first-post .diary-cover.flip-open {
+  animation: flipOpen 0.8s ease-out forwards;
+}
+
+@keyframes flipOpen {
+  to { transform: rotateY(-160deg); }
+}
+
+.page-first-post .diary-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f5f5dc, #e8e4c9);
+  border-radius: 4px 12px 12px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
+  opacity: 0;
+}
+
+.page-first-post .diary-page.reveal {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.page-first-post .diary-page .label {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.page-first-post .diary-page .date {
+  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.page-first-post .diary-page .decorative-line {
+  width: 60px;
+  height: 2px;
+  background: #999;
+  margin-top: 24px;
+}
+
+/* ===== 第 3 頁：總發文 ===== */
+.page-total-posts .number-display {
+  display: flex;
+  align-items: baseline;
+  opacity: 0;
+}
+
+.page-total-posts .number-display.visible {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.page-total-posts .post-icons {
+  display: flex;
+  gap: 8px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 200px;
+}
+
+.page-total-posts .post-icon {
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 2px;
+  opacity: 0;
+  animation: popIn 0.3s ease forwards;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ===== 第 4 頁：最活躍日 ===== */
+.page-active-day .explosion-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-active-day .date-display {
+  font-size: 48px;
+  font-weight: 800;
+  color: #fff;
+  opacity: 0;
+}
+
+.page-active-day .date-display.explode {
+  animation: explodeIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes explodeIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.page-active-day .count-badge {
+  font-size: 72px;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 16px;
+  opacity: 0;
+}
+
+.page-active-day .count-badge.visible {
+  animation: fadeUp 0.5s ease 0.3s forwards;
+}
+
+.page-active-day .particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+}
+
+.page-active-day .particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  animation: scatter 0.8s ease-out forwards;
+}
+
+@keyframes scatter {
+  to {
+    transform: rotate(var(--angle)) translateX(var(--distance));
+    opacity: 0;
+  }
+}
+
+/* ===== 第 5 頁：連續發文 ===== */
+.page-streak .streak-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+}
+
+.page-streak .streak-display.visible {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.page-streak .streak-number {
+  font-size: 120px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.page-streak .streak-unit {
+  font-size: 24px;
+  color: #888;
+  margin-top: 8px;
+}
+
+.page-streak .flame-container {
+  position: absolute;
+  bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-streak .flame {
+  width: 60px;
+  height: 80px;
+  background: linear-gradient(to top, #ff6b00, #ffc107, #fff);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  filter: blur(2px);
+  opacity: 0;
+}
+
+.page-streak .flame.burning {
+  opacity: 1;
+  animation: flicker 0.3s infinite alternate;
+}
+
+@keyframes flicker {
+  0% { transform: scaleY(1) scaleX(1); }
+  50% { transform: scaleY(1.1) scaleX(0.95); }
+  100% { transform: scaleY(0.95) scaleX(1.05); }
+}
+
+.page-streak .flame-glow {
+  width: 100px;
+  height: 50px;
+  background: radial-gradient(ellipse, rgba(255, 107, 0, 0.5), transparent);
+  margin-top: -10px;
+  opacity: 0;
+}
+
+.page-streak .flame.burning + .flame-glow {
+  opacity: 1;
+}
+
+/* ===== 第 6 頁：創作量 ===== */
+.page-words .words-display {
+  display: flex;
+  align-items: baseline;
+  opacity: 0;
+}
+
+.page-words .words-display.visible {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.page-words .words-number {
+  font-size: 80px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.page-words .words-unit {
+  font-size: 32px;
+  color: #888;
+  margin-left: 8px;
+}
+
+.page-words .book-stack {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.page-words .book {
+  width: 120px;
+  height: 16px;
+  background: linear-gradient(90deg, #444, #666, #444);
+  border-radius: 2px;
+  margin-top: -2px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-words .book.stack-in {
+  animation: stackIn 0.3s ease forwards;
+}
+
+@keyframes stackIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-words .book:nth-child(1) { width: 100px; background: linear-gradient(90deg, #555, #777, #555); }
+.page-words .book:nth-child(2) { width: 110px; }
+.page-words .book:nth-child(3) { width: 90px; background: linear-gradient(90deg, #333, #555, #333); }
+.page-words .book:nth-child(4) { width: 115px; }
+.page-words .book:nth-child(5) { width: 95px; background: linear-gradient(90deg, #444, #666, #444); }
+
+/* ===== 第 7 頁：互動王 ===== */
+.page-top-liked .liked-user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+}
+
+.page-top-liked .liked-user.visible {
+  animation: slideIn 0.5s ease forwards;
+}
+
+.page-top-liked .user-avatar {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #333, #111);
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.page-top-liked .user-name {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.page-top-liked .like-count {
+  font-size: 48px;
+  font-weight: 800;
+  color: #ff4757;
+  margin-top: 8px;
+}
+
+.page-top-liked .hearts-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-top-liked .heart {
+  position: absolute;
+  top: -30px;
+  font-size: 24px;
+  animation: heartFall linear forwards;
+}
+
+@keyframes heartFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ===== 第 8 頁：年度關鍵字 ===== */
+.page-keywords .word-cloud {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.page-keywords .cloud-word {
+  font-weight: 700;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.page-keywords .cloud-word.pop-in {
+  animation: bounceScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.page-keywords .cloud-word.size-0 { font-size: 56px; }
+.page-keywords .cloud-word.size-1 { font-size: 40px; color: #aaa; }
+.page-keywords .cloud-word.size-2 { font-size: 28px; color: #666; }
+
+/* ===== 第 9 頁：社群成長 ===== */
+.page-followers .growth-display {
+  display: flex;
+  align-items: baseline;
+  opacity: 0;
+}
+
+.page-followers .growth-display.visible {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.page-followers .plus {
+  font-size: 48px;
+  font-weight: 800;
+  color: #4cd964;
+  margin-right: 8px;
+}
+
+.page-followers .followers-number {
+  font-size: 80px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.page-followers .unit {
+  font-size: 24px;
+  color: #888;
+  margin-left: 8px;
+}
+
+.page-followers .crowd-animation {
+  margin-top: 40px;
+}
+
+.page-followers .person-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 250px;
+}
+
+.page-followers .person-icon {
+  width: 32px;
+  height: 32px;
+  background: #333;
+  border-radius: 50%;
+  opacity: 0;
+  animation: popIn 0.3s ease forwards;
+}
+
+/* ===== 第 10 頁：漲粉高峰 ===== */
+.page-peak-month .peak-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-peak-month .month-display {
+  font-size: 48px;
+  font-weight: 800;
+  color: #fff;
+  opacity: 0;
+}
+
+.page-peak-month .month-display.visible {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.page-peak-month .chart-container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.page-peak-month .chart-bar {
+  width: 80px;
+  background: linear-gradient(to top, #4cd964, #7ed321);
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12px;
+  height: 0;
+}
+
+.page-peak-month .chart-bar.grow-up {
+  animation: growUp 1s ease forwards;
+}
+
+@keyframes growUp {
+  to { height: 180px; }
+}
+
+.page-peak-month .bar-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.page-peak-month .chart-icon {
+  font-size: 48px;
+  margin-top: 24px;
+  opacity: 0;
+}
+
+.page-peak-month .chart-icon.bounce-in {
+  animation: bounceScale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ===== 第 11 頁：人格類型 ===== */
+.page-personality .personality-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.page-personality .personality-icon {
+  font-size: 80px;
+  opacity: 0;
+}
+
+.page-personality .personality-icon.visible {
+  animation: bounceScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.page-personality .personality-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 24px;
+  opacity: 0;
+}
+
+.page-personality .personality-title.visible {
+  animation: fadeUp 0.5s ease 0.3s forwards;
+}
+
+.page-personality .moon-animation {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.page-personality .moon {
+  position: absolute;
+  bottom: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
+  opacity: 0;
+}
+
+.page-personality .moon.rise {
+  animation: moonRise 1.5s ease forwards;
+}
+
+@keyframes moonRise {
+  to {
+    opacity: 1;
+    bottom: -50px;
+  }
+}
+
+.page-personality .stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.page-personality .star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  animation: twinkle 2s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* ===== 第 12 頁：最愛表情 ===== */
+.page-emoji .emoji-display {
+  position: relative;
+}
+
+.page-emoji .big-emoji {
+  font-size: 150px;
+  opacity: 0;
+}
+
+.page-emoji .big-emoji.visible {
+  animation: bounceScale 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.page-emoji .emoji-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+}
+
+.page-emoji .emoji-particle {
+  position: absolute;
+  font-size: 32px;
+  opacity: 0;
+  animation: emojiScatter 0.8s ease-out forwards;
+}
+
+@keyframes emojiScatter {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--angle)) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(150px);
+  }
+}
+
+/* ===== 第 13 頁：結尾 ===== */
+.page-ending .ending-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.page-ending .ending-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 40px 0;
+  opacity: 0;
+}
+
+.page-ending .ending-title.visible {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.page-ending .summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.page-ending .summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+}
+
+.page-ending .summary-item.visible {
+  animation: slideUp 0.4s ease forwards;
+}
+
+.page-ending .summary-item .value {
+  font-size: 36px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.page-ending .summary-item .label {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+  opacity: 1;
+}
+
+.page-ending .threads-logo-ending {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+}
+
+.page-ending .threads-logo-ending.visible {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.page-ending .threads-logo-ending svg {
+  width: 48px;
+  height: 48px;
+}
+
+.page-ending .threads-logo-ending svg path {
+  fill: #fff;
+}
+
+.page-ending .threads-logo-ending span {
+  font-size: 18px;
+  color: #666;
+}
+
+.page-ending .view-summary-btn {
+  background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+  color: #000;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin: 24px 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.page-ending .view-summary-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+}
+
+.page-ending .view-summary-btn:active {
+  transform: scale(0.98);
+}
+
+/* ===== RWD 響應式 ===== */
+@media (max-width: 480px) {
+  .story-page {
+    padding: 50px 24px;
+  }
+
+  .big-number {
+    font-size: 72px;
+  }
+
+  .page-opening .title {
+    font-size: 32px;
+  }
+
+  .page-streak .streak-number {
+    font-size: 80px;
+  }
+
+  .page-words .words-number {
+    font-size: 60px;
+  }
+
+  .page-followers .followers-number {
+    font-size: 60px;
+  }
+
+  .page-emoji .big-emoji {
+    font-size: 100px;
+  }
+
+  .page-ending .summary-item .value {
+    font-size: 28px;
+  }
+}

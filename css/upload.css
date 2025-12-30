@@ -1,0 +1,132 @@
+/**
+ * upload.css - 上傳頁面 + Loading 頁面樣式
+ */
+
+/* Upload Page */
+.upload-container {
+  max-width: 600px;
+  width: 100%;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.logo-header {
+  margin-bottom: 40px;
+}
+
+.threads-logo {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+}
+
+.logo-header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.logo-header .year-svg-header {
+  width: 150px;
+  height: 60px;
+  display: block;
+  margin: 0 auto;
+}
+
+.drop-zone {
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 60px 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.drop-zone:hover,
+.drop-zone.dragover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.upload-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.drop-text {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.drop-subtext {
+  font-size: 14px;
+  color: #666666;
+}
+
+.instructions {
+  margin-top: 40px;
+  text-align: left;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+}
+
+.instructions p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #888888;
+  margin-bottom: 12px;
+}
+
+.instructions ol {
+  padding-left: 20px;
+  color: #666666;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* Loading Page */
+.loading-container {
+  text-align: center;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 24px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#loading-text {
+  font-size: 16px;
+  color: #888888;
+  margin-bottom: 24px;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #FFFFFF;
+  transition: width 0.3s ease;
+}

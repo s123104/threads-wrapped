@@ -16,6 +16,8 @@ export class Analyzer {
    * 執行所有分析並返回結果
    */
   analyze() {
+    const peakData = this.getPeakFollowerMonth();
+
     return {
       username: this.username,
       totalPosts: this.posts.length,
@@ -24,6 +26,7 @@ export class Analyzer {
       followersCount: this.followers.length,
       followingCount: this.following.length,
       mostActiveDay: this.findMostActiveDay(),
+      mostActiveDayCount: this.getMostActiveDayCount(),
       longestStreak: this.calculateLongestStreak(),
       dailyActivity: this.getDailyActivity(),
       weeklyDistribution: this.getWeeklyDistribution(),
@@ -31,8 +34,65 @@ export class Analyzer {
       topKeywords: this.getTopKeywords(),
       favoriteEmoji: this.getFavoriteEmoji(),
       personality: this.determinePersonality(),
-      hourlyDistribution: this.getHourlyDistribution()
+      hourlyDistribution: this.getHourlyDistribution(),
+      firstPostDate: this.getFirstPostDate(),
+      ...peakData
     };
+  }
+
+  /**
+   * 取得第一篇發文日期
+   */
+  getFirstPostDate() {
+    if (this.posts.length === 0) return '-';
+
+    const sorted = [...this.posts].sort((a, b) => a.timestamp - b.timestamp);
+    const first = sorted[0];
+    const date = new Date(first.timestamp * 1000);
+
+    return `${date.getMonth() + 1} 月 ${date.getDate()} 日`;
+  }
+
+  /**
+   * 取得最活躍日的發文數
+   */
+  getMostActiveDayCount() {
+    const dateCounts = {};
+    for (const post of this.posts) {
+      dateCounts[post.date] = (dateCounts[post.date] || 0) + 1;
+    }
+    return Math.max(...Object.values(dateCounts), 0);
+  }
+
+  /**
+   * 取得漲粉高峰月份
+   */
+  getPeakFollowerMonth() {
+    const monthCounts = {};
+
+    for (const follower of this.followers) {
+      if (!follower.timestamp) continue;
+      const date = new Date(follower.timestamp * 1000);
+      const key = `${date.getFullYear()}-${date.getMonth() + 1}`;
+      monthCounts[key] = (monthCounts[key] || 0) + 1;
+    }
+
+    let peakMonth = '-';
+    let peakGain = 0;
+
+    for (const [month, count] of Object.entries(monthCounts)) {
+      if (count > peakGain) {
+        peakGain = count;
+        peakMonth = month;
+      }
+    }
+
+    if (peakMonth !== '-') {
+      const [year, month] = peakMonth.split('-');
+      peakMonth = `${month} 月`;
+    }
+
+    return { peakFollowerMonth: peakMonth, peakFollowerGain: peakGain };
   }
 
   /**

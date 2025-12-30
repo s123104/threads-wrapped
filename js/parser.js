@@ -89,7 +89,7 @@ export class Parser {
     ];
 
     const optionalFiles = [
-      'personal_information.json'
+      'archived_threads.json'
     ];
 
     // 讀取所有檔案
@@ -217,23 +217,29 @@ export class Parser {
     }
 
     // 解析用戶名稱
-    const personalInfo = rawData['personal_information.json'];
-    if (personalInfo?.profile_user) {
-      for (const profile of personalInfo.profile_user) {
-        if (profile.string_map_data?.Username?.value) {
-          result.username = profile.string_map_data.Username.value;
-          break;
+    // 嘗試方法 1: 從 archived_threads.json 的「作者」欄位提取
+    const archivedData = rawData['archived_threads.json'];
+    if (archivedData?.text_post_app_text_app_archived_posts?.length > 0) {
+      const firstPost = archivedData.text_post_app_text_app_archived_posts[0];
+      if (firstPost.string_map_data) {
+        for (const [key, data] of Object.entries(firstPost.string_map_data)) {
+          const decodedKey = fixEncoding(key);
+          if (decodedKey === '作者' && data?.value) {
+            result.username = data.value;
+            break;
+          }
         }
       }
     }
 
-    // 如果找不到用戶名稱，嘗試從資料夾名稱提取
+    // 嘗試方法 2: 從資料夾名稱提取
     if (!result.username && this.threadsPath) {
-      const match = this.threadsPath.match(/instagram-([^-]+)-/);
+      const match = this.threadsPath.match(/instagram-(.+?)-\d{4}-\d{2}-\d{2}/);
       if (match) {
         result.username = match[1];
       }
     }
+
 
     return result;
   }
