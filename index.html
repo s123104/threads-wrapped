@@ -38,9 +38,34 @@
             <polyline points="17 8 12 3 7 8"/>
             <line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
-          <p class="drop-text">拖曳 Instagram 匯出資料夾到這裡</p>
-          <p class="drop-subtext">或點擊選擇資料夾</p>
-          <input type="file" id="folder-input" webkitdirectory directory multiple hidden>
+          <p class="drop-text">點擊或拖曳檔案到這裡</p>
+          <p class="drop-subtext">支援 ZIP 檔案或資料夾</p>
+        </div>
+      </div>
+
+      <input type="file" id="zip-input" accept=".zip,application/zip,application/x-zip-compressed" hidden>
+      <input type="file" id="folder-input" webkitdirectory directory multiple hidden>
+
+      <!-- 上傳類型選擇彈窗 -->
+      <div id="upload-modal" class="upload-modal">
+        <div class="upload-modal-content">
+          <p class="upload-modal-title">選擇上傳方式</p>
+          <button id="modal-btn-zip" class="upload-modal-btn upload-modal-btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            <span>ZIP 檔案</span>
+            <span class="upload-modal-desc">上傳下載的壓縮檔</span>
+          </button>
+          <button id="modal-btn-folder" class="upload-modal-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+            <span>資料夾</span>
+            <span class="upload-modal-desc">上傳解壓縮後的資料夾</span>
+          </button>
         </div>
       </div>
 
@@ -50,7 +75,7 @@
           <li>前往 Instagram 設定 → 帳號中心</li>
           <li>選擇「你的資訊和權限」→「下載你的資訊」</li>
           <li>選擇 Threads 資料，格式選 JSON</li>
-          <li>下載後解壓縮，上傳整個資料夾</li>
+          <li>下載後直接上傳 ZIP 檔案</li>
         </ol>
       </div>
     </div>
