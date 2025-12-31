@@ -26,3 +26,36 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/* Site Footer */
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 20px;
+  text-align: center;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 1001;
+}
+
+.site-footer p {
+  margin: 4px 0;
+}
+
+.site-footer a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.site-footer a:hover {
+  color: #FFFFFF;
+}
+
+.site-footer .disclaimer {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+}
