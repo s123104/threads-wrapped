@@ -101,6 +101,10 @@ open http://localhost:8000
 
 本專案採用 [MIT License](LICENSE) 授權。
 
+## 第三方套件
+
+- [zip.js](https://gildas-lormeau.github.io/zip.js/) - BSD-3-Clause
+
 ## Author
 
 Made by [法蘭克](https://www.threads.com/@frankchen.tw) & [阿璋](https://www.threads.com/@azlife_1224)
