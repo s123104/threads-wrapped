@@ -11,6 +11,7 @@ class ResultApp {
     this.renderer = null;
     this.wrappedContainer = document.getElementById('wrapped-container');
     this.downloadBtn = document.getElementById('download-btn');
+    this.replayBtn = document.getElementById('replay-btn');
     this.restartBtn = document.getElementById('restart-btn');
 
     this.init();
@@ -61,6 +62,13 @@ class ResultApp {
     if (this.downloadBtn) {
       this.downloadBtn.addEventListener('click', () => {
         this.downloadImage();
+      });
+    }
+
+    // 重新播放按鈕
+    if (this.replayBtn) {
+      this.replayBtn.addEventListener('click', () => {
+        this.replay();
       });
     }
 
@@ -144,6 +152,14 @@ class ResultApp {
       await new Promise(r => setTimeout(r, 200));
       overlay.classList.remove('active');
     }
+  }
+
+  /**
+   * 重新播放故事
+   */
+  replay() {
+    // 導航到故事頁面重新播放
+    window.location.href = 'story.html';
   }
 
   /**

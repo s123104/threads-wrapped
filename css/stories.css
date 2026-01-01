@@ -11,7 +11,7 @@
   transform: translateX(-50%);
   width: 100%;
   max-width: 1080px;
-  height: 100vh;
+  height: calc(100vh - 70px);
   background: #000;
   overflow: hidden;
   cursor: pointer;
@@ -20,6 +20,18 @@
 
 #story-container.active {
   display: block;
+}
+
+/* Story 頁面 Footer */
+body:has(#story-container.active) .site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: #000;
+  padding-top: 8px;
+  padding-bottom: 5px;
 }
 
 /* ===== 進度條 ===== */
@@ -54,7 +66,7 @@
   display: block;
   height: 100%;
   background: #fff;
-  animation: progressFill 5s linear forwards;
+  animation: progressFill var(--progress-duration, 3s) linear forwards;
 }
 
 @keyframes progressFill {
@@ -127,7 +139,7 @@
 /* ===== 點擊提示 ===== */
 .tap-hint {
   position: absolute;
-  bottom: 40px;
+  bottom: 80px;
   font-size: 14px;
   color: #444;
   opacity: 0;
@@ -950,7 +962,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  margin-bottom: 24px;
   opacity: 0;
 }
 
@@ -995,6 +1008,29 @@
   transform: scale(0.98);
 }
 
+.page-ending .restart-btn {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+}
+
+.page-ending .restart-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: #fff;
+}
+
+.page-ending .restart-btn:active {
+  transform: scale(0.98);
+}
+
 /* ===== RWD 響應式 ===== */
 @media (max-width: 480px) {
   .story-page {
@@ -1025,7 +1061,30 @@
     font-size: 100px;
   }
 
-  .page-ending .summary-item .value {
+  .page-ending .threads-logo-ending {
+    margin-bottom: 16px;
+  }
+
+  .page-ending .threads-logo-ending svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  .page-ending .ending-title {
     font-size: 28px;
+    margin: 0 0 24px 0;
+  }
+
+  .page-ending .summary-grid {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .page-ending .summary-item .value {
+    font-size: 24px;
+  }
+
+  .page-ending .view-summary-btn {
+    margin: 16px 0;
   }
 }

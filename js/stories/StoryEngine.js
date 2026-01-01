@@ -30,6 +30,8 @@ export class StoryEngine {
     this.progressBar = null;
     this.pagesWrapper = null;
     this.onComplete = null;
+    this.autoPlayTimer = null;
+    this.pageDuration = 3000; // 每頁停留 3 秒
 
     // 頁面類別陣列
     this.pageClasses = [
@@ -153,12 +155,18 @@ export class StoryEngine {
         }
       }
     }, { passive: true });
+
+    // 監聽重新播放事件
+    window.addEventListener('restartStory', () => {
+      this.showPage(0);
+    });
   }
 
   /**
    * 切換到下一頁
    */
   async nextPage() {
+    this.stopAutoPlay();
     if (this.currentPage >= this.totalPages - 1) {
       // 已經在最後一頁，觸發完成回調
       if (this.onComplete) {
@@ -173,6 +181,7 @@ export class StoryEngine {
    * 切換到上一頁
    */
   async prevPage() {
+    this.stopAutoPlay();
     if (this.currentPage <= 0) return;
     await this.showPage(this.currentPage - 1);
   }
@@ -207,6 +216,9 @@ export class StoryEngine {
     await page.animateIn(pageEl);
 
     this.isAnimating = false;
+
+    // 啟動自動播放計時器
+    this.startAutoPlay();
   }
 
   /**
@@ -221,7 +233,31 @@ export class StoryEngine {
       }
       if (i === index) {
         seg.classList.add('active');
+        seg.style.setProperty('--progress-duration', `${this.pageDuration}ms`);
       }
     });
+  }
+
+  /**
+   * 開始自動播放計時器
+   */
+  startAutoPlay() {
+    this.stopAutoPlay();
+    // 最後一頁不自動播放
+    if (this.currentPage >= this.totalPages - 1) return;
+
+    this.autoPlayTimer = setTimeout(() => {
+      this.nextPage();
+    }, this.pageDuration);
+  }
+
+  /**
+   * 停止自動播放計時器
+   */
+  stopAutoPlay() {
+    if (this.autoPlayTimer) {
+      clearTimeout(this.autoPlayTimer);
+      this.autoPlayTimer = null;
+    }
   }
 }

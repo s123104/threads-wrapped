@@ -243,8 +243,13 @@ export class Analyzer {
     for (const post of this.posts) {
       if (!post.text) continue;
 
+      // 清理文字：移除 URL、@用戶名、#hashtag
+      let cleanText = post.text.replace(/https?:\/\/[^\s]+/g, '');
+      cleanText = cleanText.replace(/@[\w.]+/g, '');
+      cleanText = cleanText.replace(/#[\w\u4e00-\u9fff]+/g, '');
+
       // 提取中文詞彙（2-4字）
-      const chineseWords = post.text.match(/[\u4e00-\u9fff]{2,4}/g) || [];
+      const chineseWords = cleanText.match(/[\u4e00-\u9fff]{2,4}/g) || [];
       for (const word of chineseWords) {
         if (!stopWords.has(word)) {
           wordCounts[word] = (wordCounts[word] || 0) + 1;
@@ -252,7 +257,7 @@ export class Analyzer {
       }
 
       // 提取英文單詞
-      const englishWords = post.text.match(/[a-zA-Z]{2,}/g) || [];
+      const englishWords = cleanText.match(/[a-zA-Z]{2,}/g) || [];
       for (const word of englishWords) {
         const lower = word.toLowerCase();
         if (!stopWords.has(lower) && word.length > 1) {

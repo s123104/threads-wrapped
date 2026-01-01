@@ -311,6 +311,80 @@
 
 /* Mobile RWD */
 @media (max-width: 480px) {
+  .upload-container {
+    padding: 20px 16px;
+  }
+
+  .logo-header {
+    margin-bottom: 20px;
+  }
+
+  .threads-logo {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+  }
+
+  .logo-header h1 {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .logo-header .year-svg-header {
+    width: 120px;
+    height: 48px;
+  }
+
+  .drop-zone {
+    padding: 24px 16px;
+  }
+
+  .upload-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 10px;
+  }
+
+  .drop-text {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .drop-subtext {
+    font-size: 12px;
+  }
+
+  .upload-disclaimer {
+    margin-top: 10px;
+    font-size: 10px;
+  }
+
+  .tutorial-link {
+    margin-top: 16px;
+    padding: 10px 18px;
+    font-size: 13px;
+  }
+
+  .tutorial-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .instructions {
+    margin-top: 16px;
+    padding: 16px;
+  }
+
+  .instructions p {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .instructions ol {
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
   .upload-buttons {
     flex-direction: column;
   }
@@ -318,9 +392,5 @@
   .upload-btn {
     width: 100%;
     justify-content: center;
-  }
-
-  .drop-zone {
-    padding: 40px 20px;
   }
 }

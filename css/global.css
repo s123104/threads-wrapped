@@ -158,3 +158,18 @@ body {
     transform: translateY(0);
   }
 }
+
+/* Mobile RWD */
+@media (max-width: 480px) {
+  .site-footer {
+    padding: 12px 16px;
+  }
+
+  .site-footer p {
+    margin: 2px 0;
+  }
+
+  .site-footer .disclaimer {
+    font-size: 9px;
+  }
+}

@@ -4,14 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Threads Wrapped 2025 - Result</title>
+  <title>Threads Wrapped - Result</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/global.css">
   <link rel="stylesheet" href="css/result.css">
   <script>
     (function () {
-      var scale = Math.min((window.innerWidth - 40) / 1080, 1);
-      document.documentElement.style.setProperty('--container-scale', scale);
+      function calcScale() {
+        var isMobile = window.innerWidth <= 480;
+        // 手機版：按鈕兩行約 90px + footer 約 60px + padding 24px + gap 32px = 206px
+        // 桌面版：按鈕一行約 50px + footer 約 60px + padding 32px + gap 32px = 174px
+        var reservedHeight = isMobile ? 206 : 174;
+        var padding = isMobile ? 24 : 32;
+        var availableWidth = window.innerWidth - padding;
+        var availableHeight = window.innerHeight - reservedHeight;
+        var scaleW = availableWidth / 1080;
+        var scaleH = availableHeight / 1080;
+        var scale = Math.min(scaleW, scaleH, 1);
+        document.documentElement.style.setProperty('--container-scale', scale);
+      }
+      calcScale();
+      window.addEventListener('resize', calcScale);
     })();
   </script>
 </head>
@@ -160,6 +173,13 @@
             <line x1="12" y1="15" x2="12" y2="3" />
           </svg>
           下載圖片
+        </button>
+        <button id="replay-btn" class="replay-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 4v6h6" />
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
+          </svg>
+          重新播放
         </button>
         <button id="restart-btn" class="restart-btn">重新產生</button>
       </div>
