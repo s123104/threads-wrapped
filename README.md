@@ -133,12 +133,6 @@ threads-wrapped/
 - XSS 防護機制
 - 符合 OWASP 2025 安全標準
 
-**SEO 優化**
-- 完整的 Meta Tags（Open Graph、Twitter Card）
-- Schema.org 結構化資料（WebApplication、AboutPage、FAQPage、Organization）
-- 優化的 Sitemap 配置
-- 語義化 HTML5 結構
-
 **無障礙性**
 - 完整的 ARIA 屬性
 - 鍵盤導航支援
@@ -191,16 +185,6 @@ open http://localhost:8000
 - [zip.js](https://gildas-lormeau.github.io/zip.js/) - BSD-3-Clause License
 - [html2canvas](https://html2canvas.hertzen.com/) - MIT License（用於結果頁面截圖功能）
 
-## 貢獻指南
-
-歡迎提交 Issue 或 Pull Request！
-
-在提交 PR 前，請確保：
-- 程式碼遵循專案風格規範
-- 已完成自我審查
-- 所有功能已測試通過
-- Commit 訊息遵循 Conventional Commits 規範
-
 ## 相關連結
 
 - [線上體驗](https://threads-wrapped.frankchen.tw/)
@@ -215,7 +199,7 @@ Made by [法蘭克](https://www.threads.com/@frankchen.tw) & [阿璋](https://ww
 
 **法蘭克的連結**
 - Tech Blog: [frankchen.tw](https://www.frankchen.tw/)
-- GitHub: [@Edit-Mr](https://github.com/Edit-Mr)
+- GitHub: [@haunchen](https://github.com/haunchen)
 
 **阿璋的連結**
 - Hao Tool: [haotool.org](https://haotool.org/)
