@@ -60,19 +60,31 @@
 }
 
 .modal-icon-info {
-  color: #ccc;
+  color: #4da3ff;
 }
 
 .modal-icon-success {
-  color: #fff;
+  color: #38d996;
 }
 
 .modal-icon-warning {
-  color: #999;
+  color: #f7c948;
 }
 
 .modal-icon-error {
-  color: #666;
+  color: #ff5c5c;
+}
+
+.modal-icon-confirm {
+  color: #3bd5c4;
+}
+
+.modal-icon-nodata {
+  color: #9aa5b1;
+}
+
+.modal-icon-critical {
+  color: #ff6b6b;
 }
 
 /* 標題 */
