@@ -121,14 +121,18 @@
 
 <body>
   <!-- 漢堡選單 -->
-  <nav class="hamburger-nav">
-    <button class="hamburger-btn" id="hamburger-btn" aria-label="選單">
-      <span></span>
-      <span></span>
-      <span></span>
+  <nav class="hamburger-nav" aria-label="主要導航">
+    <button class="hamburger-btn" id="hamburger-btn" aria-label="開啟選單" aria-expanded="false" aria-controls="nav-menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
     </button>
-    <div class="nav-menu" id="nav-menu">
-      <a href="https://www.frankchen.tw" target="_blank" rel="noopener">我的部落格</a>
+    <div class="nav-menu" id="nav-menu" role="menu" aria-hidden="true">
+      <a href="index.html" role="menuitem" aria-current="page">首頁</a>
+      <a href="about.html" role="menuitem">關於</a>
+      <a href="privacy.html" role="menuitem">隱私政策</a>
+      <a href="faq.html" role="menuitem">常見問題</a>
+      <a href="https://www.frankchen.tw" target="_blank" rel="noopener" role="menuitem">我的部落格</a>
     </div>
   </nav>
 
