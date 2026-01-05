@@ -6,6 +6,7 @@
 import { Parser } from './parser.js';
 import { Analyzer } from './analyzer.js';
 import { ZipHandler } from './zip-handler.js';
+import { modal } from './modal.js';
 
 class UploadApp {
   constructor() {
@@ -209,7 +210,7 @@ class UploadApp {
 
     } catch (error) {
       console.error('ZIP Error:', error);
-      alert(`錯誤：${error.message}`);
+      modal.showError(`錯誤：${error.message}`);
       this.showPage('upload');
     }
   }
@@ -252,7 +253,7 @@ class UploadApp {
 
     } catch (error) {
       console.error('Error:', error);
-      alert(`錯誤：${error.message}`);
+      modal.showError(`錯誤：${error.message}`);
       this.showPage('upload');
     }
   }
