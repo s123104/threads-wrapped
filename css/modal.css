@@ -1,0 +1,188 @@
+/**
+ * 模態窗樣式
+ * 統一風格的提示、確認與錯誤訊息顯示
+ */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay.active .modal-content {
+  transform: scale(1);
+}
+
+/* 圖示 */
+.modal-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.modal-icon-info {
+  color: #4da3ff;
+}
+
+.modal-icon-success {
+  color: #38d996;
+}
+
+.modal-icon-warning {
+  color: #f7c948;
+}
+
+.modal-icon-error {
+  color: #ff5c5c;
+}
+
+.modal-icon-confirm {
+  color: #3bd5c4;
+}
+
+.modal-icon-nodata {
+  color: #9aa5b1;
+}
+
+.modal-icon-critical {
+  color: #ff6b6b;
+}
+
+/* 標題 */
+.modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 12px 0;
+  line-height: 1.3;
+}
+
+/* 訊息 */
+.modal-message {
+  font-size: 16px;
+  color: #999;
+  margin: 0 0 32px 0;
+  line-height: 1.6;
+}
+
+/* 按鈕容器 */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* 按鈕 */
+.modal-btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.modal-btn-primary {
+  background: #fff;
+  color: #000;
+}
+
+.modal-btn-primary:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.modal-btn-primary:active {
+  transform: translateY(0);
+}
+
+.modal-btn-secondary {
+  background: transparent;
+  color: #999;
+  border: 1px solid #333;
+}
+
+.modal-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  border-color: #555;
+}
+
+/* 響應式設計 */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 24px;
+    max-width: 90%;
+  }
+
+  .modal-icon {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 20px;
+  }
+
+  .modal-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .modal-message {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+  }
+
+  .modal-btn {
+    width: 100%;
+    padding: 14px 24px;
+  }
+}
