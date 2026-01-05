@@ -24,17 +24,8 @@ function calcScale() {
   document.documentElement.style.setProperty('--container-scale', scale);
 }
 
-/**
- * 初始化響應式縮放
- */
-export function initResponsiveScale() {
+// 自動初始化
+(function() {
   calcScale();
   window.addEventListener('resize', calcScale);
-}
-
-// 自動初始化
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initResponsiveScale);
-} else {
-  initResponsiveScale();
-}
+})();
