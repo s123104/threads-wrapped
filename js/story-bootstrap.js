@@ -4,6 +4,7 @@
  */
 
 import { StoryEngine } from './stories/StoryEngine.js';
+import { modal } from './modal.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const container = document.getElementById('story-container');
@@ -11,8 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 從 localStorage 讀取 stats
   const statsJson = localStorage.getItem('threadsStats');
   if (!statsJson) {
-    alert('找不到統計資料，請重新上傳檔案');
-    window.location.href = 'index.html';
+    modal.showNoData();
     return;
   }
 

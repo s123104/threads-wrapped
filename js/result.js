@@ -4,6 +4,7 @@
  */
 
 import { Renderer } from './renderer.js';
+import { modal } from './modal.js';
 
 class ResultApp {
   constructor() {
@@ -36,8 +37,7 @@ class ResultApp {
     // 從 localStorage 讀取 stats
     const statsJson = localStorage.getItem('threadsStats');
     if (!statsJson) {
-      alert('找不到統計資料，請重新上傳檔案');
-      window.location.href = 'index.html';
+      modal.showNoData();
       return;
     }
 
@@ -149,7 +149,7 @@ class ResultApp {
       link.click();
     } catch (error) {
       console.error('Download error:', error);
-      alert('下載失敗，請稍後再試');
+      modal.showError('下載失敗，請稍後再試');
     } finally {
       await new Promise(r => setTimeout(r, 200));
       overlay.classList.remove('active');
